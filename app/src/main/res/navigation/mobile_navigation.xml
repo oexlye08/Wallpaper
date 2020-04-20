@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_photos">
+
+    <fragment
+        android:id="@+id/nav_photos"
+        android:name="id.simpus.wallpaper.ui.photos.PhotosFragment"
+        android:label="@string/photos"
+        tools:layout="@layout/fragment_photos" />
+
+    <fragment
+        android:id="@+id/nav_collections"
+        android:name="id.simpus.wallpaper.ui.collection.CollectionFragment"
+        android:label="@string/collections"
+        tools:layout="@layout/fragment_collection" />
+
+    <fragment
+        android:id="@+id/nav_favorite"
+        android:name="id.simpus.wallpaper.ui.favorite.FavoritesFragment"
+        android:label="@string/favorites"
+        tools:layout="@layout/fragment_slideshow" />
+
+
+</navigation>
