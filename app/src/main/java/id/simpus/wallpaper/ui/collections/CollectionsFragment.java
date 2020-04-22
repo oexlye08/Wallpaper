@@ -38,19 +38,15 @@ public class CollectionsFragment extends Fragment   {
 
     @BindView(R.id.fragment_collections_username)
     TextView username;
-
     @BindView(R.id.fragment_collections_description)
     TextView description;
-
     @BindView(R.id.fragment_collections_tittle)
     TextView tittle;
 
     @BindView(R.id.fragment_collections_user_avatar)
     CircleImageView userAvatar;
-
     @BindView(R.id.fragment_collections_ProgressBar)
     ProgressBar progressBar;
-
     @BindView(R.id.rv_fragment_collections)
     RecyclerView recyclerView;
 

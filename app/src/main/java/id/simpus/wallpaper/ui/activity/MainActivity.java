@@ -1,4 +1,4 @@
-package id.simpus.wallpaper;
+package id.simpus.wallpaper.ui.activity;
 
 import android.os.Bundle;
 
@@ -20,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+
+import id.simpus.wallpaper.R;
 
 public class MainActivity extends AppCompatActivity {
 

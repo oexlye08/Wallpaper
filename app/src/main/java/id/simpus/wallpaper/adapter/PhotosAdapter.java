@@ -1,9 +1,11 @@
 package id.simpus.wallpaper.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,8 +15,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.simpus.wallpaper.R;
+import id.simpus.wallpaper.ui.activity.FullscreenPhotoActivity;
 import id.simpus.wallpaper.ui.photos.model.Photo;
 import id.simpus.wallpaper.utils.GlideApp;
 import id.simpus.wallpaper.utils.SquareImage;
@@ -72,9 +76,22 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
 
         @BindView(R.id.item_photo_photo)
         SquareImage photo;
+
+        @BindView(R.id.item_photo_layout)
+        FrameLayout item_photo_layout;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        @OnClick(R.id.item_photo_layout)
+        public void setItem_photo_layout(){
+            int position = getAdapterPosition();
+            String photoId = photos.get(position).getId();
+            Intent intent = new Intent(context, FullscreenPhotoActivity.class);
+            intent.putExtra("photoId", photoId);
+            context.startActivity(intent);
         }
     }
 }

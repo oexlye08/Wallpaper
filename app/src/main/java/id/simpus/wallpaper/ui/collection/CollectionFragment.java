@@ -57,15 +57,6 @@ public class CollectionFragment extends Fragment {
         return view;
     }
 
-    private void showProgressBar(boolean isShow) {
-        if (isShow){
-            progressBar.setVisibility(View.VISIBLE);
-            gridView.setVisibility(View.GONE);
-        }else {
-            progressBar.setVisibility(View.GONE);
-            gridView.setVisibility(View.VISIBLE);
-        }
-    }
 
     @OnItemClick(R.id.fragment_collection_GridView)
     public void onItemClick(int position){
@@ -100,6 +91,17 @@ public class CollectionFragment extends Fragment {
 
             }
         });
+    }
+
+
+    private void showProgressBar(boolean isShow) {
+        if (isShow){
+            progressBar.setVisibility(View.VISIBLE);
+            gridView.setVisibility(View.GONE);
+        }else {
+            progressBar.setVisibility(View.GONE);
+            gridView.setVisibility(View.VISIBLE);
+        }
     }
 
 
