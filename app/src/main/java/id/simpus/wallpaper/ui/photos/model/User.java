@@ -2,7 +2,9 @@ package id.simpus.wallpaper.ui.photos.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class User {
+import io.realm.RealmObject;
+
+public class User extends RealmObject {
 
     @SerializedName("id")
     private String id;

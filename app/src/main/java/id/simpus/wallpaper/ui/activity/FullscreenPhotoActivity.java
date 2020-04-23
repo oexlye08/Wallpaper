@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import com.github.clans.fab.FloatingActionMenu;
 
 import org.w3c.dom.Text;
 
+import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -28,6 +30,7 @@ import id.simpus.wallpaper.R;
 import id.simpus.wallpaper.ui.photos.model.Photo;
 import id.simpus.wallpaper.utils.Functions;
 import id.simpus.wallpaper.utils.GlideApp;
+import id.simpus.wallpaper.utils.RealmController;
 import id.simpus.wallpaper.web_services.ApiInterfaces;
 import id.simpus.wallpaper.web_services.ServiceGenerator;
 import retrofit2.Call;
@@ -50,8 +53,17 @@ public class FullscreenPhotoActivity extends AppCompatActivity {
     @BindView(R.id.activity_fullscreenphoto_fab_wallpaper)
     FloatingActionButton fab_wallpaper;
 
+    @BindDrawable(R.drawable.ic_check_favorite)
+    Drawable icFavorite;
+    @BindDrawable(R.drawable.ic_check_favorited)
+    Drawable icFavorited;
+
     private Unbinder unbinder;
     private Bitmap photoBitmap;
+
+    private RealmController realmController;
+
+    private Photo photo;
 
 
     @Override
@@ -64,18 +76,23 @@ public class FullscreenPhotoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String photoId = intent.getStringExtra("photoId");
 
+        realmController = new RealmController();
+        if (realmController.isPhotoExist(photoId)){
+            fab_favorit.setImageDrawable(icFavorited);
+        }
+
         getPhotosIntent(photoId);
     }
 
     private void getPhotosIntent(String id){
         ApiInterfaces apiInterfaces = ServiceGenerator.createService(ApiInterfaces.class);
-        Call<Photo> call = apiInterfaces.getPhoto(id);
+        Call<Photo> call = apiInterfaces.getFullscreenPhoto(id);
         call.enqueue(new Callback<Photo>() {
             @Override
             public void onResponse(Call<Photo> call, Response<Photo> response) {
                 if (response.isSuccessful()){
-                    Photo photo = response.body();
-                    uodateUI(photo);
+                    photo = response.body();
+                    updateUI(photo);
                 }
             }
 
@@ -86,7 +103,7 @@ public class FullscreenPhotoActivity extends AppCompatActivity {
         });
     }
 
-    private void uodateUI(Photo photo) {
+    private void updateUI(Photo photo) {
         try {
             username.setText(photo.getUser().getUsername());
             GlideApp.with(FullscreenPhotoActivity.this)
@@ -113,6 +130,15 @@ public class FullscreenPhotoActivity extends AppCompatActivity {
 
     @OnClick(R.id.activity_fullscreenphoto_fab_favorit)
     public void setFab_favorit(){
+        if (realmController.isPhotoExist(photo.getId())){
+            realmController.deletePhoto(photo);
+            fab_favorit.setImageDrawable(icFavorite);
+            Toast.makeText(this, "Remove Favorite", Toast.LENGTH_SHORT).show();
+        }else {
+            realmController.savePhoto(photo);
+            fab_favorit.setImageDrawable(icFavorited);
+            Toast.makeText(this, "Favorited", Toast.LENGTH_SHORT).show();
+        }
 
         fab_menu.close(true);
     }

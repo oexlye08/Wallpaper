@@ -2,7 +2,9 @@ package id.simpus.wallpaper.ui.photos.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ProfilImage {
+import io.realm.RealmObject;
+
+public class ProfilImage extends RealmObject {
 
     @SerializedName("small")
     private String small;
